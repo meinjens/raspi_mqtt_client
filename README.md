@@ -46,3 +46,5 @@ Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 - 🛳️ Automatic release to [PyPI](https://pypi.org) using [twine](https://twine.readthedocs.io/en/latest/) and github actions.
 - 🎯 Entry points to execute your program using `python -m <python_demo>` or `$ python_demo` with basic CLI argument parsing.
 - 🔄 Continuous integration using [Github Actions](.github/workflows/main.yml) with jobs to lint, test and release your project on Linux, Mac and Windows environments.
+
+> This project is created with [python-project-template](https://github.com/rochacbruno/python-project-template).
