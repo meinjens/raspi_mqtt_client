@@ -8,13 +8,16 @@ class MQTT:
     """
     Control class handles the main loop
     """
+
     mqtt_client = None
-    host = 'localhost'
+    host = "localhost"
     port = 1883
     username = None
     password = None
 
-    def __init__(self, host='localhost', port=1883, username=None, password=None):
+    def __init__(
+        self, host="localhost", port=1883, username=None, password=None
+    ):
         """
         Constructor
         """
@@ -29,12 +32,12 @@ class MQTT:
             self.mqtt_client.username_pw_set(self.username, self.password)
 
         def on_connect():
-            logging.info('Connected to MQTT server...')
+            logging.info("Connected to MQTT server...")
 
         self.mqtt_client.on_connect = on_connect
 
         def on_disconnect():
-            logging.info('Disconnected from MQTT server.')
+            logging.info("Disconnected from MQTT server.")
 
         self.mqtt_client.on_disconnect = on_disconnect
 

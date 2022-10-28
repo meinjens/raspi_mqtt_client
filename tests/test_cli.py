@@ -7,10 +7,12 @@ class CliTestCase(unittest.TestCase):
         with self.assertLogs("root", level="INFO") as error_logs:
             main()
         self.assertEqual(
-            error_logs.output[0], "INFO:root:Starting Raspberry Pi MQTT client..."
+            error_logs.output[0],
+            "INFO:root:Starting Raspberry Pi MQTT client...",
         )
         self.assertEqual(
-            error_logs.output[-1], "INFO:root:Raspberry Pi MQTT client stopped."
+            error_logs.output[-1],
+            "INFO:root:Raspberry Pi MQTT client stopped.",
         )
 
     def test_no_config_should_log_errors(self):

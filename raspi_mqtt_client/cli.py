@@ -1,6 +1,5 @@
 """CLI interface for raspi mqtt client
 """
-import argparse
 import logging
 
 from decouple import UndefinedValueError, config
