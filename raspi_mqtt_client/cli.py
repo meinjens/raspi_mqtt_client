@@ -1,28 +1,37 @@
-"""CLI interface for python_demo project.
-
-Be creative! do whatever you want!
-
-- Install click or typer and create a CLI app
-- Use builtin argparse
-- Start a web application
-- Import things from your .base module
+"""CLI interface for raspi mqtt client
 """
+import argparse
+import logging
+
+from decouple import UndefinedValueError, config
+
+
+def fetch_env_value(env_name, default_value=""):
+    try:
+        return config(str(env_name))
+    except UndefinedValueError:
+        logging.error(
+            "Environment parameter %s not set. Please check your configuration.",
+            env_name,
+        )
+        return default_value
 
 
 def main():  # pragma: no cover
     """
-    The main function executes on commands:
-    `python -m python_demo` and `$ python_demo `.
-
-    This is your program's entry point.
-
-    You can change this function to do whatever you want.
-    Examples:
-        * Run a test suite
-        * Run a server
-        * Do some other stuff
-        * Run a command line application (Click, Typer, ArgParse)
-        * List all available tasks
-        * Run an application (Flask, FastAPI, Django, etc.)
+    Start the main logic
     """
-    print("This will do something")
+    logging.basicConfig(
+        format="%(levelname)s:%(message)s",
+        filename="raspi_mqtt_client.log",
+        level=logging.INFO,
+    )
+
+    logging.info("Starting Raspberry Pi MQTT client...")
+
+    mqtt_broker_host = fetch_env_value("MQTT_BROKER_HOST")
+    mqtt_broker_port = fetch_env_value("MQTT_BROKER_PORT")
+    mqtt_broker_user = fetch_env_value("MQTT_BROKER_USER")
+    mqtt_broker_pass = fetch_env_value("MQTT_BROKER_PASS")
+
+    logging.info("Raspberry Pi MQTT client stopped.")
