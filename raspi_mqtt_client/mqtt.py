@@ -13,7 +13,7 @@ class MQTT:
     Control class handles the main loop
     """
 
-    mqtt_client = None
+    mqtt_client: mqtt.Client = None
     host = "localhost"
     port = 1883
     username = None
@@ -77,7 +77,8 @@ class MQTT:
         :return:
         """
         logging.debug(
-            "on_disconnect: client=%s, userdata=%s, reason_code=%s, properties=%s",
+            "on_disconnect: client=%s, userdata=%s, reason_code=%s,"
+            " properties=%s",
             str(client),
             str(userdata),
             str(reason_code),

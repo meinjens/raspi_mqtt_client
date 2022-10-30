@@ -18,7 +18,8 @@ def fetch_env_value(env_name, default_value=""):
         return config(str(env_name))
     except UndefinedValueError:
         logging.error(
-            "Environment parameter %s not set. Please check your configuration.",
+            "Environment parameter %s not set. "
+            "Please check your configuration.",
             env_name,
         )
         return default_value
