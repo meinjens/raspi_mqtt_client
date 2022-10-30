@@ -1,12 +1,14 @@
 # This requirements are for development and testing only, not for production.
-pytest
-coverage
-python-decouple
-flake8
 black
-isort
-pytest-cov
 codecov
-mypy
+coverage
+flake8
 gitchangelog
+isort
 mkdocs
+mypy
+paho-mqtt
+psutil
+pytest
+pytest-cov
+python-decouple
