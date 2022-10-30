@@ -30,7 +30,7 @@ class MQTT:
         self.port = port
         self.username = username
         self.password = password
-        self.client_id = f"raspi_mqtt_client-{uuid.uuid1()}".encode('utf-8')
+        self.client_id = f"raspi_mqtt_client-{uuid.uuid1()}".encode("utf-8")
 
         self.mqtt_client = mqtt.Client(
             client_id="raspi_mqtt_client", protocol=mqtt.MQTTv5
@@ -50,7 +50,7 @@ class MQTT:
         """
         self.stop()
 
-    #pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments
     def on_connect(self, client, userdata, flags, reason_code, properties):
         """
         Generate log string on connection
