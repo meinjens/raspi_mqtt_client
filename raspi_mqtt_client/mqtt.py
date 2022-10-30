@@ -3,7 +3,6 @@ MQTT client logic
 """
 
 import logging
-import signal
 import uuid
 
 import paho.mqtt.client as mqtt
@@ -19,6 +18,7 @@ class MQTT:
     port = 1883
     username = None
     password = None
+    client_id = None
 
     def __init__(
         self, host="localhost", port=1883, username=None, password=None
@@ -33,7 +33,7 @@ class MQTT:
         self.client_id = f"raspi_mqtt_client-{uuid.uuid1()}".encode("utf-8")
 
         self.mqtt_client = mqtt.Client(
-            client_id="raspi_mqtt_client", protocol=mqtt.MQTTv5
+            client_id=self.client_id, protocol=mqtt.MQTTv5
         )
 
         if self.username is not None:
@@ -41,14 +41,6 @@ class MQTT:
 
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_disconnect = self.on_disconnect
-        signal.signal(signal.SIGINT, self.signal_handler)
-
-    def signal_handler(self):
-        """
-        Stop server on SIGINT
-        :return: nothing
-        """
-        self.stop()
 
     # pylint: disable=too-many-arguments
     def on_connect(self, client, userdata, flags, reason_code, properties):
@@ -99,6 +91,7 @@ class MQTT:
     def start(self):
         """
         Start mqtt client
+
         :return: nothing
         """
         self.mqtt_client.connect(host=self.host, port=self.port)
@@ -107,7 +100,36 @@ class MQTT:
     def stop(self):
         """
         Stop mqtt client
+
         :return: nothing
         """
         self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
+
+    def publish_all(self, topic: str, data: list):
+        """
+        Publish all entries in list topic/list[x][name]
+
+        :param topic:
+        :param data:
+        :return:
+        """
+        for entry in data:
+            self.publish(topic, entry)
+
+    def publish(self, topic: str, data: dict):
+        """
+        Publish data to MQTT topic
+
+        :param topic:
+        :param data:
+        :return:
+        """
+        logging.debug(
+            "Publishing: %s -> %s",
+            str(topic + data["name"]),
+            str(data["value"]),
+        )
+        self.mqtt_client.publish(
+            str(topic + data["name"]), data["value"], retain=True
+        )
