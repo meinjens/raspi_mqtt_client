@@ -47,7 +47,10 @@ def main(exit_please=False):  # pragma: no cover
     location = fetch_env_value("LOCATION", "unknown")
 
     mqtt_client = MQTT(
-        mqtt_broker_host, int(mqtt_broker_port), mqtt_broker_user, mqtt_broker_pass
+        mqtt_broker_host,
+        int(mqtt_broker_port),
+        mqtt_broker_user,
+        mqtt_broker_pass,
     )
 
     def signal_handler(sig, frame):

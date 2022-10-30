@@ -30,7 +30,7 @@ class CliTestCase(unittest.TestCase):
                 "ERROR:root:Environment parameter MQTT_BROKER_USER not set. Please check your configuration.",
                 "ERROR:root:Environment parameter MQTT_BROKER_PASS not set. Please check your configuration.",
                 "ERROR:root:Environment parameter LOCATION not set. Please check your configuration.",
-                "ERROR:root:Unable to connect to MQTT broker!"
+                "ERROR:root:Unable to connect to MQTT broker!",
             ],
         )
 
