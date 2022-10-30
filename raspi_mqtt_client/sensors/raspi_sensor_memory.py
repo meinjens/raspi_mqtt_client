@@ -10,6 +10,7 @@ class RaspiMemorySensor(Sensor):
     """
     Read memory free and used memory
     """
+
     component = "memory"
 
     def read_sensor_data(self) -> list:

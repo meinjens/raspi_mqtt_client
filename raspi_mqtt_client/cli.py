@@ -3,6 +3,7 @@
 import logging
 import signal
 import sys
+import time
 
 from decouple import UndefinedValueError, config
 
@@ -12,6 +13,7 @@ from raspi_mqtt_client.sensors.raspi_sensor_memory import RaspiMemorySensor
 from raspi_mqtt_client.sensors.raspi_sensor_temperature import (
     RaspiCpuTemperatureSensor,
 )
+from raspi_mqtt_client.sensors.raspi_sensor_wlan import RaspiWlanSensor
 
 
 def fetch_env_value(env_name, default_value=""):
@@ -46,6 +48,7 @@ def main(exit_please=False):  # pragma: no cover
     mqtt_broker_user = fetch_env_value("MQTT_BROKER_USER")
     mqtt_broker_pass = fetch_env_value("MQTT_BROKER_PASS")
     location = fetch_env_value("LOCATION", "unknown")
+    timeout = fetch_env_value("TIMEOUT", "2")
 
     mqtt_client = MQTT(
         mqtt_broker_host,
@@ -78,6 +81,13 @@ def main(exit_please=False):  # pragma: no cover
         topic_sensor3 = raspi_memory_sensor.read_topic()
         data_sensor3 = raspi_memory_sensor.read_sensor_data()
         mqtt_client.publish_all(topic_sensor3, data_sensor3)
+
+        raspi_wlan_sensor = RaspiWlanSensor(location)
+        topic_sensor4 = raspi_wlan_sensor.read_topic()
+        data_sensor4 = raspi_wlan_sensor.read_sensor_data()
+        mqtt_client.publish_all(topic_sensor4, data_sensor4)
+
+        time.sleep(int(timeout))
 
     mqtt_client.stop()
     logging.info("Raspberry Pi MQTT client stopped.")
