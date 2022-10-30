@@ -19,21 +19,6 @@ class CliTestCase(unittest.TestCase):
             "INFO:root:Raspberry Pi MQTT client stopped.",
         )
 
-    def test_no_config_should_log_errors(self):
-        with self.assertLogs("root", level="ERROR") as error_logs:
-            main(exit_please=True)
-        self.assertEqual(
-            error_logs.output,
-            [
-                "ERROR:root:Environment parameter MQTT_BROKER_HOST not set. Please check your configuration.",
-                "ERROR:root:Environment parameter MQTT_BROKER_PORT not set. Please check your configuration.",
-                "ERROR:root:Environment parameter MQTT_BROKER_USER not set. Please check your configuration.",
-                "ERROR:root:Environment parameter MQTT_BROKER_PASS not set. Please check your configuration.",
-                "ERROR:root:Environment parameter LOCATION not set. Please check your configuration.",
-                "ERROR:root:Unable to connect to MQTT broker!",
-            ],
-        )
-
 
 if __name__ == "__main__":
     unittest.main()
