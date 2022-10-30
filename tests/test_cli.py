@@ -1,3 +1,7 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=line-too-long
 import unittest
 from raspi_mqtt_client.cli import main
 
@@ -5,7 +9,7 @@ from raspi_mqtt_client.cli import main
 class CliTestCase(unittest.TestCase):
     def test_logging_should_contain_start_and_stop_message(self):
         with self.assertLogs("root", level="INFO") as error_logs:
-            main()
+            main(exit_please=True)
         self.assertEqual(
             error_logs.output[0],
             "INFO:root:Starting Raspberry Pi MQTT client...",
@@ -17,7 +21,7 @@ class CliTestCase(unittest.TestCase):
 
     def test_no_config_should_log_errors(self):
         with self.assertLogs("root", level="ERROR") as error_logs:
-            main()
+            main(exit_please=True)
         self.assertEqual(
             error_logs.output,
             [

@@ -25,7 +25,7 @@ def fetch_env_value(env_name, default_value=""):
         return default_value
 
 
-def main():  # pragma: no cover
+def main(exit_please=False):  # pragma: no cover
     """
     Start the main logic
     """
@@ -42,7 +42,6 @@ def main():  # pragma: no cover
     mqtt_broker_user = fetch_env_value("MQTT_BROKER_USER")
     mqtt_broker_pass = fetch_env_value("MQTT_BROKER_PASS")
     location = fetch_env_value("LOCATION")
-    exit_please = False
 
     mqtt_client = MQTT(
         mqtt_broker_host, mqtt_broker_port, mqtt_broker_user, mqtt_broker_pass
