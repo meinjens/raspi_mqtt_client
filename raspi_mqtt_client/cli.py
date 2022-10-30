@@ -8,6 +8,9 @@ from decouple import UndefinedValueError, config
 
 from raspi_mqtt_client.mqtt import MQTT
 from raspi_mqtt_client.sensors.raspi_sensor_cpu import RaspiCpuLoadSensor
+from raspi_mqtt_client.sensors.raspi_sensor_temperature import (
+    RaspiCpuTemperatureSensor,
+)
 
 
 def fetch_env_value(env_name, default_value=""):
@@ -58,10 +61,15 @@ def main(exit_please=False):  # pragma: no cover
 
     while not exit_please:
         raspi_cpu_sensor = RaspiCpuLoadSensor(location)
-        data = raspi_cpu_sensor.read_sensor_data()
-        topic = raspi_cpu_sensor.read_topic()
+        data_sensor1 = raspi_cpu_sensor.read_sensor_data()
+        topic_sensor1 = raspi_cpu_sensor.read_topic()
 
-        mqtt_client.publish_all(topic, data)
+        mqtt_client.publish_all(topic_sensor1, data_sensor1)
+
+        raspi_cpu_temp_sensor = RaspiCpuTemperatureSensor(location)
+        topic_sensor2 = raspi_cpu_temp_sensor.read_topic()
+        data_sensor2 = raspi_cpu_temp_sensor.read_sensor_data()
+        mqtt_client.publish_all(topic_sensor2, data_sensor2)
 
     mqtt_client.stop()
     logging.info("Raspberry Pi MQTT client stopped.")
