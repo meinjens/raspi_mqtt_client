@@ -50,6 +50,13 @@ def main(exit_please=False):  # pragma: no cover
     location = fetch_env_value("LOCATION", "unknown")
     timeout = fetch_env_value("TIMEOUT", "2")
 
+    sensors = [
+        RaspiCpuLoadSensor(location),
+        RaspiCpuTemperatureSensor(location),
+        RaspiMemorySensor(location),
+        RaspiWlanSensor(location),
+    ]
+
     mqtt_client = MQTT(
         mqtt_broker_host,
         int(mqtt_broker_port),
@@ -67,25 +74,10 @@ def main(exit_please=False):  # pragma: no cover
     mqtt_client.start()
 
     while not exit_please:
-        raspi_cpu_sensor = RaspiCpuLoadSensor(location)
-        data_sensor1 = raspi_cpu_sensor.read_sensor_data()
-        topic_sensor1 = raspi_cpu_sensor.read_topic()
-        mqtt_client.publish_all(topic_sensor1, data_sensor1)
-
-        raspi_cpu_temp_sensor = RaspiCpuTemperatureSensor(location)
-        topic_sensor2 = raspi_cpu_temp_sensor.read_topic()
-        data_sensor2 = raspi_cpu_temp_sensor.read_sensor_data()
-        mqtt_client.publish_all(topic_sensor2, data_sensor2)
-
-        raspi_memory_sensor = RaspiMemorySensor(location)
-        topic_sensor3 = raspi_memory_sensor.read_topic()
-        data_sensor3 = raspi_memory_sensor.read_sensor_data()
-        mqtt_client.publish_all(topic_sensor3, data_sensor3)
-
-        raspi_wlan_sensor = RaspiWlanSensor(location)
-        topic_sensor4 = raspi_wlan_sensor.read_topic()
-        data_sensor4 = raspi_wlan_sensor.read_sensor_data()
-        mqtt_client.publish_all(topic_sensor4, data_sensor4)
+        for sensor in sensors:
+            topic = sensor.read_topic()
+            data = sensor.read_sensor_data()
+            mqtt_client.publish_all(topic, data)
 
         time.sleep(int(timeout))
 
