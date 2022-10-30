@@ -40,14 +40,14 @@ def main(exit_please=False):  # pragma: no cover
 
     logging.info("Starting Raspberry Pi MQTT client...")
 
-    mqtt_broker_host = fetch_env_value("MQTT_BROKER_HOST")
-    mqtt_broker_port = int(fetch_env_value("MQTT_BROKER_PORT"))
+    mqtt_broker_host = fetch_env_value("MQTT_BROKER_HOST", "localhost")
+    mqtt_broker_port = fetch_env_value("MQTT_BROKER_PORT", "1883")
     mqtt_broker_user = fetch_env_value("MQTT_BROKER_USER")
     mqtt_broker_pass = fetch_env_value("MQTT_BROKER_PASS")
-    location = fetch_env_value("LOCATION")
+    location = fetch_env_value("LOCATION", "unknown")
 
     mqtt_client = MQTT(
-        mqtt_broker_host, mqtt_broker_port, mqtt_broker_user, mqtt_broker_pass
+        mqtt_broker_host, int(mqtt_broker_port), mqtt_broker_user, mqtt_broker_pass
     )
 
     def signal_handler(sig, frame):

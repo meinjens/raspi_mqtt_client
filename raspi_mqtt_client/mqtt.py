@@ -95,8 +95,11 @@ class MQTT:
 
         :return: nothing
         """
-        self.mqtt_client.connect(host=self.host, port=self.port)
-        self.mqtt_client.loop_start()
+        try:
+            self.mqtt_client.connect(host=self.host, port=self.port)
+            self.mqtt_client.loop_start()
+        except ConnectionRefusedError:
+            logging.error("Unable to connect to MQTT broker!")
 
     def stop(self):
         """
