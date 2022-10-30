@@ -7,6 +7,7 @@ class Sensor:
     """
     Abstract sensor class
     """
+
     location = None
     category = "sensor"
     component = "unknown"

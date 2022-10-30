@@ -12,6 +12,7 @@ class RaspiCpuTemperatureSensor(Sensor):
     """
     Reads cpu temperature from raspberry pi
     """
+
     component = "cpu"
     vcgencmd = "/usr/bin/vcgencmd"
 

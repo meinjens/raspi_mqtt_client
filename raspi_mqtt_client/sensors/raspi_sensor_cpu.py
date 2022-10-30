@@ -10,6 +10,7 @@ class RaspiCpuLoadSensor(Sensor):
     """
     Reads cpu load
     """
+
     component = "cpu"
 
     def read_sensor_data(self) -> list:
