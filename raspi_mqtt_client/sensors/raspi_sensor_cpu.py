@@ -3,18 +3,14 @@ CPU sensor
 """
 import psutil
 
+from raspi_mqtt_client.sensors import Sensor
 
-class RaspiCpuLoadSensor:
+
+class RaspiCpuLoadSensor(Sensor):
     """
     Reads cpu load
     """
-
-    category = "sensor"
     component = "cpu"
-    location = "unknown"
-
-    def __init__(self, location: str = "unknown"):
-        self.location = location
 
     def read_sensor_data(self) -> list:
         """

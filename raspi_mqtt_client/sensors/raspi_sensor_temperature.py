@@ -5,25 +5,21 @@ import logging
 import subprocess
 from pathlib import Path
 
+from raspi_mqtt_client.sensors import Sensor
 
-class RaspiCpuTemperatureSensor:
+
+class RaspiCpuTemperatureSensor(Sensor):
     """
     Reads cpu temperature from raspberry pi
     """
-
-    category = "sensor"
     component = "cpu"
-    location = "unknown"
     vcgencmd = "/usr/bin/vcgencmd"
-
-    def __init__(self, location: str = "unknown"):
-        self.location = location
 
     def read_sensor_data(self) -> list:
         """
         :return: list with measured temperature
         """
-        if not self.is_command_available():
+        if not self._is_command_available():
             logging.warning(
                 "Unable to find command for measuring cpu temperature: %s",
                 self.vcgencmd,
@@ -48,7 +44,7 @@ class RaspiCpuTemperatureSensor:
         """
         return f"/{self.location}/{self.category}/{self.component}/"
 
-    def is_command_available(self):
+    def _is_command_available(self):
         """
         :return: check if tool for measuring temperature is installed
         """
